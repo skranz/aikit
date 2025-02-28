@@ -1,0 +1,11 @@
+Package: aikit
+Type: Package
+Title: Toolkit for working with LLM models
+Version: 0.1.0
+Author: Sebastian Kranz
+Maintainer: Sebastian Kranz <sebastian.kranz@uni-ulm.de>
+Description: Currently tested together only with rgemini
+License: GPL >= 2.0
+Depends: rgemini
+Encoding: UTF-8
+LazyData: true
