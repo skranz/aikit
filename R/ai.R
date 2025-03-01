@@ -9,7 +9,9 @@ ai_init = function(project="",json_mode=FALSE, schema=NULL, values = NULL, conte
     stop("provide a template tpl or tpl_file or haver version$tpl_file filled.")
   }
 
-  ai = list(project = project, tpl=tpl, model=model, schema=schema, json_mode=version$json_mode, temperature=temperature, media_files=media_files, version=version, context=context)
+  ai = list(project = project, tpl=tpl, model=model, schema=schema, json_mode=json_mode, temperature=temperature, media_files=media_files, context=context)
+  class(ai) = c("gemini_call","list")
+  ai
 }
 
 
@@ -38,7 +40,35 @@ ai_run = function(ai, values=ai$values, verbose=FALSE) {
     if (verbose)
       cat("\n",ai$err_msg,"\n")
   }
-  class(ai) = c("ai","list")
+  ai$fine_status = ai_fine_status(ai)
+  ai$broad_status = ai_fine_status_to_broad_status(ai$fine_status)
+  class(ai) = c("gemini_result","gemini_call", "list")
 
   return(ai)
 }
+
+ai_fine_status = function(ai, status_code = ai$status_code) {
+  if (is.null(ai)) return("empty")
+  types = c(
+    ok = 200,
+    error = 400,
+    error = 404,
+    rate_limit = c(429),
+    unavailable = c(503),
+    permission = c(403),
+    input_limit = c(500),
+    timeout = c(504)
+  )
+  ind = match(status_code, types)
+  na_val(names(types[ind]), "unknown")
+}
+
+ai_fine_status_to_broad_status = function(fine_status) {
+  case_when(
+    fine_status %in% c("rate_limit","unavailable", "permission") ~ "outage",
+    fine_status %in% c("error", "input_limit", "timeout") ~ "error",
+    fine_status == "empty" ~ "empty",
+    TRUE ~ "ok"
+  )
+}
+
