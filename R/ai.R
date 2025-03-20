@@ -2,7 +2,7 @@
 ai_init = function(project="",json_mode=FALSE, schema=NULL, values = NULL, context=NULL, media_files=NULL, tpl=NULL, tpl_file = NULL,   model=ai_opts$model, temperature=ai_opts$temperature, ai_opts=get_ai_opts()) {
   restore.point("ai_init")
   #undebug(to_json_schema)
-  schema = to_json_schema(schema)
+  schema = to_json_schema_obj(schema)
   if (is.null(tpl) & !is.null(tpl_file)) {
     tpl = merge.lines(suppressWarnings(readLines(tpl_file)))
   } else if (is.null(tpl)) {

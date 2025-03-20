@@ -1,3 +1,7 @@
+ai_clear_cache = function() {
+  options(aikit_ai_cache = NULL)
+}
+
 
 ai_cache = function(project="") {
   cache = getOption("aikit_ai_cache")
