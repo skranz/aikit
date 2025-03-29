@@ -6,6 +6,6 @@ Author: Sebastian Kranz
 Maintainer: Sebastian Kranz <sebastian.kranz@uni-ulm.de>
 Description: Currently tested together only with rgemini
 License: GPL >= 2.0
-Depends: rgemini
+Depends: rgemini, restorepoint
 Encoding: UTF-8
 LazyData: true
