@@ -10,6 +10,16 @@ ai_glue = function(ai, values=ai$values) {
   ai
 }
 
+example = function() {
+  tpl = "Hi {{name}}!"
+}
+
+ai_tpl_vars = function(txt) {
+  pattern <- "\\{\\{\\s*(.*?)\\s*\\}\\}"
+  vars <- unique(stri_match_all_regex(txt, pattern)[[1]][,2])
+  vars
+}
+
 ai_replace_whisker = function(txt, values) {
   restore.point("ai_replace_whisker")
   # Define regex with a capturing group for content inside {{ }}
@@ -18,7 +28,7 @@ ai_replace_whisker = function(txt, values) {
   # Locate positions of all matches in the string
   matches <- stri_match_all_regex(txt, pattern)[[1]]
   if (NROW(matches)==0) return(txt)
-  
+
   symbols = unique(matches[,2])
 
   vars = names(values)
