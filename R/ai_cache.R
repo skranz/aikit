@@ -61,7 +61,7 @@ file_mtime_for_hash = function(files) {
 # Generate or retrieve previously generated context object
 ai_context = function(project="", model=ai_opts$model, media_files =NULL, prompt=NULL, ttl_sec=60*5,  cache_context = isTRUE(ai_opts$cache_context), api_key = getOption("gemini_api_key"), ai_opts = get_ai_opts()) {
   restore.point("ai_context")
-  mtime = file_mtime_for_hash(media_file)
+  mtime = file_mtime_for_hash(media_files)
   hash = paste0("h",digest::digest(list(project=project, model=model, prompt=prompt, media_files=media_files, mtime=mtime)))
   ccache = ai_cache(project)$context_cache
   context = ccache[[hash]]
