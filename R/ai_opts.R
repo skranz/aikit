@@ -13,6 +13,8 @@ get_ai_opts = function() {
 ai_model_short = function(model) {
   case_when(
     model == "gemini-2.0-flash" ~ "g2f",
+    model == "gemini-2.5-flash" ~ "g25f",
+    model == "gemini-2.5-flash-lite-preview-06-17" ~ "g25flp",
     model == "gemini-1.5-flash-001" ~ "g15f",
     model == "gemini-2.0-flash-lite-preview-02-05" ~ "g2flp",
     model == "gemini-2.0-flash-lite" ~ "g2fl",
