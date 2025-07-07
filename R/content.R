@@ -21,6 +21,16 @@ ai_correct_schema_content = function(content, schema=NULL, rclasses = schema_fie
   return(content)
 }
 
+convert_cols_to_rclasses = function(obj, rclasses) {
+  cols = intersect(names(obj), names(rclasses))
+  for (col in cols) {
+    if (!is(obj[[col]], rclasses[col])) {
+      obj[[col]] = suppressWarnings(as(obj[[col]], rclasses[col]))
+    }
+  }
+  obj
+}
+
 ai_parse_content = function(content, schema=NULL, err_val = NULL, as_tibble = TRUE, correct_schema_content=TRUE, rclasses=NULL, na_obj=NULL) {
   restore.point("ai_parse_content")
 
@@ -44,6 +54,9 @@ ai_parse_content = function(content, schema=NULL, err_val = NULL, as_tibble = TR
   obj = na_obj
   non_null_fields = names(content)[!sapply(content, is.null)]
   obj[non_null_fields] = content[non_null_fields]
+  obj = convert_cols_to_rclasses(obj, rclasses)
+
+
   if (as_tibble) return(as_tibble(obj))
   obj
 }
@@ -73,7 +86,7 @@ ai_combine_content_df = function(ai_li, add_df=NULL, atom_null_to_na = TRUE,sche
   li = lapply(seq_along(cont_li), function(i) {
     cont = cont_li[[i]]
     if (is.null(cont)) return(NULL)
-    df = ai_parse_content(cont,na_obj=na_obj)
+    df = ai_parse_content(cont,na_obj=na_obj, rclasses=rclasses)
     if (!is.null(add_df)) {
       df = bind_left_or_set_col(df, add_df[i,])
     }
