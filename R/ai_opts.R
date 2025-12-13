@@ -1,5 +1,5 @@
-set_ai_opts = function(model = c("gemini-2.0-flash", "gemini-2.5-pro-exp-03-25")[1], temperature=0, cache_context = model == "gemini-1.5-flash-001") {
-  ai_opts = list(model = model, temperature=0, cache_context=cache_context)
+set_ai_opts = function(model = c("gemini-2.0-flash", "gemini-2.5-pro-exp-03-25")[1], temperature=0, cache_context = FALSE) {
+  ai_opts = list(model = model, temperature=temperature, cache_context=cache_context)
   options(repbox_ai_opts = ai_opts)
   ai_opts
 }

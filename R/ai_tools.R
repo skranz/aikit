@@ -2,7 +2,7 @@ union_by_name = function(x,y) {
   nx = names(x)
   ny = names(y)
   dupl_y = ny %in% nx
-  c(x,ny[!dupl_y])
+  c(x,y[!dupl_y])
 }
 
 
