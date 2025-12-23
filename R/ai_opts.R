@@ -22,7 +22,8 @@ ai_model_short = function(model) {
     model == "gemini-flash-latest" ~ "gf",
     model == "gemini-2.0-flash-thinking-exp" ~ "g2fte",
     model == "gemini-2.5-pro-exp-03-25" ~ "g25pe",
-    model == "gemini-3-pro-preview" ~ "g30p",
+    model == "gemini-3-pro-preview" ~ "g3pp",
+    model == "gemini-3-flash-preview" ~ "g3fp",
     TRUE ~ model
   )
 }
